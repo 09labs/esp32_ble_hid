@@ -1,5 +1,8 @@
 # ESP32 for QMK Keyboard
 This project allows you to make the ESP32 series as a BLE HID module for QMK Keyboard.  
+Keep in mind that this project is only available in AVR based chips like `ATmega16u4, ATmegae32u4, ATmega328, ATmega32A and so on`.  
+Refer to this document for a list of [compatible AVR microcontrollers](https://github.com/qmk/qmk_firmware/blob/master/docs/compatible_microcontrollers.md).  
+
 Currently, QMK Firmware only supports two bluetooth module: RN-42 and Adafruit Feather 32u4 Bluefruit LE.  
 Not supported yet, but possible bluetooth module list:
 
