@@ -17,7 +17,7 @@ Adafruit Feather 32u4 Bluefruit LE module uses SPI as communication method.
 The RAW report mode of the RN-42 module uses a very simple protocol.  
 So I modified the source code to make ESP32 series work like RN-42 module.  
 
-This project was tested on ESP32-DevKitC, ESP32-S3-DevKitM-1, LOLIN D32 and LOLIN D32 PRO.  
+This project was tested on `ESP32-DevKitC, ESP32-S3-DevKitM-1, LOLIN D32 and LOLIN D32 PRO`.  
 As expected, This project support almost all ESP32 series Bluetooth modules.  
 But, ESP32-S2 series and ESP8266 series cannot support bluetooth feature.  
 ### Do not use ESP32-S2 and ESP8266!!!
