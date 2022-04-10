@@ -15,6 +15,7 @@ The RAW report mode of the RN-42 module uses a very simple protocol.
 So I modified the source code to make ESP32 series work like RN-42 module.  
 
 If you want to see readme in Korean, Click this [link](https://github.com/09labs/esp32_ble_hid/blob/bugfix/README_KR.md).
+
 ---
 # How to work
 Let's see QMK Firmware bluetooth feature. [Link](https://github.com/qmk/qmk_firmware/blob/master/docs/feature_bluetooth.md)  
