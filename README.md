@@ -59,7 +59,7 @@ Preferences located at `Files -> Preferences`
 * 4th, Download the ZIP this project `Code -> Download ZIP`.  
 * 5th, Unzip this project file and open `esp32_qmk/esp32_qmk.ino`.  
 * 6th, Change software serial pin you want to use.
-```
+```c
 #define SW_TX 22
 #define SW_RX 23
 ```
