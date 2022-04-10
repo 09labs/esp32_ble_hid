@@ -43,8 +43,10 @@ void rn42_send_keyboard(report_keyboard_t *report) {
 }
 ```  
 
-RN-42 `Raw Report Mode` format  
+### RN-42 `Raw Report Mode` format  
 ![RN42_Protocol](https://github.com/09labs/esp32_ble_hid/blob/bugfix/img/rn42_raw_report.png)
+
+---
 
 # Installation
 * First, Make sure you can use the ESP32 series with the Arduino IDE.  
