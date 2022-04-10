@@ -42,20 +42,21 @@ void rn42_send_keyboard(report_keyboard_t *report) {
 ```  
 
 # Installation
-First, Make sure you can use the ESP32 series with the Arduino IDE.  
+* First, Make sure you can use the ESP32 series with the Arduino IDE.  
 If you want to use ESP32 S3, add the url to the `Additional Board Manager URLs` at Arduino preferences.  
 Preferences located at `Files -> Preferences`  
 `https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json`  
-2nd, In the Arduino IDE go to `Sketch -> Include Library -> Add .Zip Library"` and select the [ESP32-BLE-Keyboard.zip](https://github.com/T-vK/ESP32-BLE-Keyboard).  
-3nd, In the Arduino IDE go to `Sketch -> Include Library -> Manage Library` and search espsoftwareserial.   
-3rd, Download the ZIP this project `Code -> Download ZIP`.  
-4th, Unzip this project file and open `esp32_qmk/esp32_qmk.ino`.  
-5th, Change software serial pin you want to use.
+
+* 2nd, In the Arduino IDE go to `Sketch -> Include Library -> Add .Zip Library"` and select the [ESP32-BLE-Keyboard.zip](https://github.com/T-vK/ESP32-BLE-Keyboard).  
+* 3rd, In the Arduino IDE go to `Sketch -> Include Library -> Manage Library` and search espsoftwareserial.   
+* 4th, Download the ZIP this project `Code -> Download ZIP`.  
+* 5th, Unzip this project file and open `esp32_qmk/esp32_qmk.ino`.  
+* 6th, Change software serial pin you want to use.
 ```
 #define SW_TX 22
 #define SW_RX 23
 ```
-6th, Compile arduino project and Upload the clode to your ESP32 board.  
+* 7th, Compile arduino project and Upload the clode to your ESP32 board.  
 
 # Thanks to...
 T-vK`s [ESP32-BLE-Keyboard](https://github.com/T-vK/ESP32-BLE-Keyboard) and plerup's [espsoftwareserial](https://github.com/plerup/espsoftwareserial) library was very helpful in developing this project.  
