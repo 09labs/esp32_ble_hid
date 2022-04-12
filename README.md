@@ -69,6 +69,10 @@ void rn42_send_keyboard(report_keyboard_t *report) {
 ---
 
 # Installation
+If you have modified the rn42.c file, you are ready to use the bluetooth feature with the ESP32.  
+Now, after uploading the firmware to the ESP32 and wiring it, you can use your keyboard wirelessly.  
+
+### Upload the code
 * First, Make sure you can use the ESP32 series with the Arduino IDE.  
 If you want to use ESP32 S3, add the url to the `Additional Board Manager URLs` at Arduino preferences.  
 Preferences located at `Files -> Preferences`  
@@ -83,7 +87,15 @@ Preferences located at `Files -> Preferences`
 #define SW_TX 22
 #define SW_RX 23
 ```
-* 7th, Compile arduino project and Upload the clode to your ESP32 board.  
+* 7th, Compile arduino project and upload the code to your ESP32 board.  
+
+### Wiring
+
+![wiring](https://github.com/09labs/esp32_ble_hid/blob/bugfix/img/esp32_avr_wiring.png)  
+If you don't use the ESP32 DevKit (ESP32, ESP32-S3 anything), refer to the block diagram above.
+1st, the usb D+, D- pin will be connected switch selector. The reason that you need to use the switch selector is to upload the code to ESP32.  
+2nd, If you use the ESP32 DevKit, you just connect Tx, Rx pin between AVR Microcontroller and ESP DevKit. 
+3rd, 
 
 # Thanks to...
 T-vK`s [ESP32-BLE-Keyboard](https://github.com/T-vK/ESP32-BLE-Keyboard) and plerup's [espsoftwareserial](https://github.com/plerup/espsoftwareserial) library was very helpful in developing this project.  
