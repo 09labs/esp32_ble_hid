@@ -1,12 +1,12 @@
-#include <SoftwareSerial.h>
+//#include <SoftwareSerial.h>
 #include "ble_hid.h"
 
 // Please change to the software serial pin you want to use. 
-#define SW_TX 22
-#define SW_RX 23
+//#define SW_TX 22
+//#define SW_RX 23
 
 BleKeyboard bleKeyboard;
-SoftwareSerial SWport;
+//SoftwareSerial SWport;
 
 // RN42KeyReport structure defined at ble_hid.h header file
 RN42KeyReport reportPacket;
@@ -21,17 +21,17 @@ void setup() {
     Serial.begin(115200);
     Serial.println("ESP32 Sample");
   #endif
-  
-  SWport.begin(115200, SWSERIAL_8N1, SW_RX, SW_TX, false);
+  Serial2.begin(115200);
+  //SWporSerialt.begin(115200, SWSERIAL_8N1, SW_RX, SW_TX, false);
   bleKeyboard.begin();
   
 }
 
 void loop() {
   
-  if(SWport.available())
+  if(Serial2.available())
   {
-    char r = SWport.read();
+    char r = Serial2.read();
 
     if(bStart)
     {
