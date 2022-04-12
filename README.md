@@ -25,8 +25,15 @@ But, ESP32-S2 series and ESP8266 series cannot support bluetooth feature.
 If you want to see readme in Korean, Click this [link](https://github.com/09labs/esp32_ble_hid/blob/bugfix/README_KR.md).
 
 ---
-# How to work
-Let's see QMK Firmware bluetooth feature. [Link](https://github.com/qmk/qmk_firmware/blob/master/docs/feature_bluetooth.md)  
+# How to work  
+
+### QMK <-> RN-42 Communication structure
+![comm_structure](https://github.com/09labs/esp32_ble_hid/blob/bugfix/img/comm_structure.png)  
+### RN-42 `Raw Report Mode` format  
+![RN42_Protocol](https://github.com/09labs/esp32_ble_hid/blob/bugfix/img/rn42_raw_report.png)
+
+This is structure for commuication between QMK Keyboard and RN-42 bluetooth module.  
+To enable bluetooth communication, let's see QMK Firmware bluetooth feature. [Link](https://github.com/qmk/qmk_firmware/blob/master/docs/feature_bluetooth.md)  
 As you can see in this document, you need to add bluetooth options on rules.mk file.  
 rules.mk file located in the keyboard project directory.  
 `qmk_firmware/keyboards/foo/bar/rules.mk`
@@ -35,7 +42,15 @@ rules.mk file located in the keyboard project directory.
 BLUETOOTH_DRIVER = RN42
 BLUETOOTH_ENABLE = yes
 ```  
-And you need to edit the `rn42_send_keyboard` function in [rn42.c](https://github.com/qmk/qmk_firmware/blob/master/drivers/bluetooth/rn42.c) as a below.  
+
+Unfortunately, You cannot use ESP32 module with original QMK Firmware.  
+Because ESP32 module doesn't have RN-42 protocol and i tried to build the ESP32 firmware to work like the RN-42.  
+But it doesn't work well, so i modified the RN-42 protocol a bit.  
+
+### Modified Raw Report Mode format
+![ESP32_Protocol](https://github.com/09labs/esp32_ble_hid/blob/bugfix/img/mod_raw_report.png)
+
+you need to edit the `rn42_send_keyboard` function in [rn42.c](https://github.com/qmk/qmk_firmware/blob/master/drivers/bluetooth/rn42.c) as a below.  
 ```c
 void rn42_send_keyboard(report_keyboard_t *report) {
     uart_write(0xFD);
@@ -50,9 +65,6 @@ void rn42_send_keyboard(report_keyboard_t *report) {
     uart_write(0xDF);
 }
 ```  
-
-### RN-42 `Raw Report Mode` format  
-![RN42_Protocol](https://github.com/09labs/esp32_ble_hid/blob/bugfix/img/rn42_raw_report.png)
 
 ---
 
