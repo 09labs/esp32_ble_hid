@@ -92,10 +92,10 @@ Preferences located at `Files -> Preferences`
 ### Wiring
 
 ![wiring](https://github.com/09labs/esp32_ble_hid/blob/bugfix/img/esp32_avr_wiring.png)  
-If you don't use the ESP32 DevKit (ESP32, ESP32-S3 anything), refer to the block diagram above.
-1st, the usb D+, D- pin will be connected switch selector. The reason that you need to use the switch selector is to upload the code to ESP32.  
-2nd, If you use the ESP32 DevKit, you just connect Tx, Rx pin between AVR Microcontroller and ESP DevKit. 
-3rd, 
+* If you don't use the ESP32 DevKit (ESP32, ESP32-S3 anything), refer to the block diagram above.  
+* The USB D+, D- pin will be connected switch selector. The reason that you need to use the switch selector is to upload the code to ESP32.  
+* If you use the ESP32 DevKit, you just connect Tx, Rx pin between AVR Microcontroller and ESP DevKit.  
+* It is okay to use a serial converter other than CH340. I used ch340 because it was the cheapest.
 
 # Thanks to...
 T-vK`s [ESP32-BLE-Keyboard](https://github.com/T-vK/ESP32-BLE-Keyboard) and plerup's [espsoftwareserial](https://github.com/plerup/espsoftwareserial) library was very helpful in developing this project.  
