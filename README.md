@@ -93,7 +93,7 @@ Preferences located at `Files -> Preferences`
 
 ![wiring](https://github.com/09labs/esp32_ble_hid/blob/bugfix/img/esp32_avr_wiring.png)  
 * If you don't use the ESP32 DevKit (ESP32, ESP32-S3 anything), refer to the block diagram above.  
-* The USB D+, D- pin will be connected switch selector. The reason that you need to use the switch selector is to upload the code to ESP32.  
+* The USB D+, D- pin will be connected switch selector. The reason that i use the switch selector is to upload the code to ESP32. (Default direction is AVR Microcontroller (QMK Keyboard))  
 * If you use the ESP32 DevKit, you just connect Tx, Rx pin between AVR Microcontroller and ESP DevKit.  
 * It is okay to use a serial converter other than CH340. I used ch340 because it was the cheapest.
 
