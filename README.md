@@ -47,7 +47,7 @@ Unfortunately, You cannot use ESP32 module with original QMK Firmware.
 Because ESP32 module doesn't have RN-42 protocol and i tried to build the ESP32 firmware to work like the RN-42.  
 But it doesn't work well, so i modified the RN-42 protocol a bit.  
 
-### Modify V-USB Protocol 
+### Modify V-USB Protocol (Atmega328P Only)
 QMK firmware uses V-USB protocol on Atmega328P MCU. However, bluetooth function is not implemented in V-USB protocol. Therefore we must be edit V-USB protocol sourcecode.  
 Go to the `send_keyboard` function in [vusb.c](https://github.com/qmk/qmk_firmware/blob/master/tmk_core/protocol/vusb/vusb.c) and edit sourcecode as a below.  
 
