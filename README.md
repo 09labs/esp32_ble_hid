@@ -47,24 +47,96 @@ Unfortunately, You cannot use ESP32 module with original QMK Firmware.
 Because ESP32 module doesn't have RN-42 protocol and i tried to build the ESP32 firmware to work like the RN-42.  
 But it doesn't work well, so i modified the RN-42 protocol a bit.  
 
-### Modified Raw Report Mode format
-![ESP32_Protocol](https://github.com/09labs/esp32_ble_hid/blob/bugfix/img/mod_raw_report.png)
+### Modify V-USB Protocol 
+QMK firmware uses V-USB protocol on Atmega328P MCU. However, bluetooth function is not implemented in V-USB protocol. Therefore we must be edit V-USB protocol sourcecode.  
+Go to the `send_keyboard` function in [vusb.c](https://github.com/qmk/qmk_firmware/blob/master/tmk_core/protocol/vusb/vusb.c) and edit sourcecode as a below.  
 
-you need to edit the `rn42_send_keyboard` function in [rn42.c](https://github.com/qmk/qmk_firmware/blob/master/drivers/bluetooth/rn42.c) as a below.  
 ```c
-void rn42_send_keyboard(report_keyboard_t *report) {
-    uart_write(0xFD);
-    uart_write(0x09);
-    uart_write(0x01);
-    uart_write(report->mods);
-    uart_write(0x00);
-    for (uint8_t i = 0; i < KEYBOARD_REPORT_KEYS; i++) {
-        uart_write(report->keys[i]);
+static void send_keyboard(report_keyboard_t *report) {
+    uint8_t next = (kbuf_head + 1) % KBUF_SIZE;
+    if (next != kbuf_tail) {
+        kbuf[kbuf_head] = *report;
+        kbuf_head       = next;
+    } else {
+        dprint("kbuf: full\n");
     }
-    // Added end flag
-    uart_write(0xDF);
+    if (where_to_send() == OUTPUT_BLUETOOTH) {
+    #ifdef BLUETOOTH_ENABLE
+	#    ifdef BLUETOOTH_RN42
+            rn42_send_keyboard(report);
+	#    endif
+        return;
+    #endif
+    }
+    
+    // NOTE: send key strokes of Macro
+    usbPoll();
+    vusb_transfer_keyboard();
+    keyboard_report_sent = *report;
 }
 ```  
+
+In [protocol.c](https://github.com/qmk/qmk_firmware/tmk_core/protocol/vusb/protocol.c), almost all functions are implemented considering only USB.  
+So i added some codes to `protocol_task` function in [protocol.c](https://github.com/qmk/qmk_firmware/tmk_core/protocol/vusb/protocol.c).  
+I added output selector code in `protocol_task` function. When you connect keyboard to use USB, output selector checks USB connection state. If power supplied using battery, output selector will automatically switch to bluetooth.  
+
+```c
+void protocol_task(void) {
+#if USB_COUNT_SOF
+    if (usbSofCount != 0) {
+        usbSofCount = 0;
+        sof_timer   = timer_read();
+        if (vusb_suspended) {
+            vusb_wakeup();
+        }
+    } else {
+        // Suspend when no SOF in 3ms-10ms(7.1.7.4 Suspending of USB1.1)
+        if (!vusb_suspended && timer_elapsed(sof_timer) > 5) {
+            vusb_suspend();
+        }
+    }
+#endif
+    if(where_to_send() == OUTPUT_BLUETOOTH)
+    {
+        keyboard_task();
+        vusb_transfer_keyboard();
+    }
+    else if(where_to_send() == OUTPUT_USB)
+    {
+        if (vusb_suspended) {
+            vusb_suspend();
+            if (suspend_wakeup_condition()) {
+                vusb_send_remote_wakeup();
+            }
+        } else {
+            usbPoll();
+
+            // TODO: configuration process is inconsistent. it sometime fails.
+            // To prevent failing to configure NOT scan keyboard during configuration
+            if (usbConfiguration && usbInterruptIsReady()) {
+                keyboard_task();
+            }
+            vusb_transfer_keyboard();
+
+    #ifdef RAW_ENABLE
+            usbPoll();
+
+            if (usbConfiguration && usbInterruptIsReady4()) {
+                raw_hid_task();
+            }
+    #endif
+
+    #ifdef CONSOLE_ENABLE
+            usbPoll();
+
+            if (usbConfiguration && usbInterruptIsReady3()) {
+                console_task();
+            }
+    #endif
+        }
+    }
+}
+```
 
 ---
 
