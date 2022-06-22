@@ -1,7 +1,7 @@
 
 #include "ble_hid.h"
 
-BleKeyboard bleKeyboard;
+BleKeyboard bleKeyboard("Joopan", "devOwnn");
 
 // RN42KeyReport structure defined at ble_hid.h header file
 RN42KeyReport reportPacket;
@@ -14,7 +14,7 @@ bool bStart = false;
 void setup() {
   #if CONSOLE_DEBUG
     Serial.begin(115200);
-    Serial.println("ESP32 Sample");
+    Serial.println("BLE is ready");
   #endif
   Serial2.begin(115200);
   pinMode(BLE_CONNECT_LED, OUTPUT);
